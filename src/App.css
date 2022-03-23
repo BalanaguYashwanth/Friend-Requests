@@ -1,0 +1,58 @@
+.login{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  height:100vh;
+  justify-content: center;
+  background-color:rgb(66,66,66);
+  color:white
+}
+
+input{
+  width: 50%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+select{
+  width: 50%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button{
+  margin: 0 auto;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.dashboard{
+  text-align: center;
+}
+
+.Img{
+  border-radius: 50%;
+  margin-top: -100px;
+}
+
+.photo{
+  background-image: url(https://source.unsplash.com/1600x900/?nature,water,life,technology);
+  height: 300px;
+  margin-top: 1px;
+  background-color: #383838;
+  background-size: cover;
+  background-position: 50%;
+}
+
+.mainbody{
+  margin-top: -50px;
+  border-radius: 15px;
+  height: 60vh;
+  width: 83%;
+  background-color: rgb(66, 66, 66);
+  position: relative;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}

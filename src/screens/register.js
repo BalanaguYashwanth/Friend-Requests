@@ -1,0 +1,45 @@
+import {useState} from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom' 
+
+export default function Register(){
+
+    const navigate = useNavigate()
+    const [logindata, setLogindata] = useState({email:'',password:'',name:''})
+    const [feedback, setFeedback] = useState('')
+
+    function submit(){
+        if(logindata.email!='',logindata.password!='',logindata.name!='')
+        {
+             //console.log(logindata)
+        axios.post('http://localhost:9000/registeruser',{
+            name:logindata.name,
+            email:logindata.email,
+            password:logindata.password
+        })
+        .then(res=>{
+            setFeedback('success')
+            navigate('/login')
+        })
+        .catch(err=>{
+            setFeedback('Please try again after sometime')    
+            console.log(err.message)
+        })
+        }else{
+            setFeedback('Please all required inputs ')    
+        }
+       
+    }
+
+
+    return(
+        <div className="login" >
+            <h2 className="my-3"> Register Page</h2>
+            <input  type="name" onChange={(e)=>setLogindata({...logindata,name:e.target.value})} className=" my-2" placeholder="Enter your name"/>
+            <input  type="email" onChange={(e)=>setLogindata({...logindata,email:e.target.value})} className=" my-2" placeholder="Enter your email"/>
+            <input type="password" onChange={(e)=>setLogindata({...logindata,password:e.target.value})} className="my-2" placeholder="Enter your password" />
+            <button onClick={submit} className="btn btn-secondary" > submit </button>
+            {feedback && <p> {feedback} </p>}
+        </div>
+    )
+}
