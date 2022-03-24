@@ -11,14 +11,25 @@ export default function Findfriends(){
     const [frienddatas, setFriendDatas] = useState('')
     const [userdetails, setUserdetails] = useState('')
     const [buttontext, setButtontext] = useState([]) 
+    const [name, setName] = useState('')
     //const {loading, data, error} =  useSelector(state=>state.user_pending)
+    const [userid, setUserid] = useState('')
 
     useEffect(() =>{
-        axios.get('http://localhost:9000/get/useremptydetails')
+
+        axios.get('https://userrequestsapp.herokuapp.com/get/usersdetailsbyid/'+localStorage.getItem('user-id'))
+        .then(res=>{
+            setUserid(res.data[0].userid)
+            setName(res.data[0].name)})
+        .catch(err=>console.log(err))
+
+
+        axios.post('https://userrequestsapp.herokuapp.com/get/useremptydetails',{
+            userid:localStorage.getItem("user-id")
+        })
         .then(res=>{
             const userdatas = res.data.filter((data)=>data.userid == localStorage.getItem('user-id'))
-           // localStorage.setItem('name',userdatas[0].name)
-            //console.log('userdatas',userdatas)
+            console.log(userdetails)
             setUserdetails(userdatas)
             const datas = res.data.filter((data)=>data.userid != localStorage.getItem('user-id'))
             setFriendDatas(datas)
@@ -29,9 +40,9 @@ export default function Findfriends(){
 
     function submit(id)
     {
-        axios.put('http://localhost:9000/get/pendinguserdetails',{
+        axios.put('https://userrequestsapp.herokuapp.com/get/pendinguserdetails',{
             userid:id,
-            request_friends:{userid:userdetails[0].userid,name:userdetails[0].name,status:'pending'}
+            request_friends:{userid:userid,name:name,status:'pending'}
         })
         .then(res=>{
             //dispatch(userPendingDetails())
