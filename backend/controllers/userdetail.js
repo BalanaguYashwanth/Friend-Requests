@@ -116,16 +116,58 @@ const getallusersdetails = asyncHandler(async(req,res)=>{
 
 
 const getemptyusersdetails = asyncHandler(async(req,res)=>{
-  const emptyuserdetails  =  await userdetail.find({})
+  const existuser= await userdetail.find({userid:req.body.userid})
+  //console.log(existuser[0].userid)
+  var emptyuserdetails  =  await userdetail.find({})
+  emptyuserdetails = emptyuserdetails.filter( (detail) => detail.userid.toString() !== req.body.userid )
   const alldetails=[]
+  const finalfilterarr=[]
+  var filterflag=0
+
   for(let details in emptyuserdetails)
-  {
-    if(emptyuserdetails[details].request_friends.length==0 && emptyuserdetails[details].friends.length == 0)
+  {    
+    filterflag=0
+    for(let detail in emptyuserdetails[details].request_friends)
     {
-      alldetails.push(emptyuserdetails[details])   
+      
+     // for( let frd in  emptyuserdetails[details].request_friends[detail])
+     // {
+        //console.log(typeof emptyuserdetails[details].request_friends[detail].userid)
+       // console.log('HELLO',emptyuserdetails[details].request_friends[detail])
+         if (emptyuserdetails[details].request_friends[detail].userid ===  req.body.userid  )
+         {
+           filterflag=filterflag+1
+         }
+     // }
+      
+    }
+      if(filterflag==0)
+         {
+           alldetails.push(emptyuserdetails[details])
+         }
+  }
+
+  var secondflag=0
+  for(let detail in alldetails)
+  {
+    secondflag=0
+    for(let reqfrds in existuser[0].request_friends)
+    {
+      //console.log( existuser[0].request_friends[reqfrds].userid, alldetails[detail].userid.toString())
+      if(existuser[0].request_friends[reqfrds].userid === alldetails[detail].userid.toString())
+      {
+        secondflag=secondflag+1
+        //console.log(alldetails[detail].name)
+      }
+    }if(secondflag==0)
+    {
+      finalfilterarr.push(alldetails[detail])
     }
   }
-  res.json(alldetails)
+
+
+
+  res.json(finalfilterarr)
   //console.log(emptyuserdetails)
 })
 
@@ -187,6 +229,8 @@ const mutualfriends = asyncHandler(async(req,res)=>{
  // }
 
   //console.log('my',mutualarr)
+
+
   res.send(finalmutualarr)
 })
 

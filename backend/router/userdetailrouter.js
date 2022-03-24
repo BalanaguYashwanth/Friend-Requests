@@ -4,7 +4,7 @@ import { mutualfriends, getemptyusersdetails,getuserbyid, getallusers, removeuse
 const router = express.Router()
 
 router.get('/userbyid/:id',getuserbyid)
-router.get('/useremptydetails',getemptyusersdetails)
+router.post('/useremptydetails',getemptyusersdetails)
 router.get('/allusers',getallusers)
 router.delete('/removeusers',removeusers)
 router.post('/userdetailsbyid',userdetailbyid)
