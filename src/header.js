@@ -17,6 +17,13 @@ export default function Header() {
     //     setResult()
     // }
 
+    function logout()
+    {
+      localStorage.removeItem('user-id')
+      localStorage.removeItem('user-token')
+      navigate('/login')
+    }
+
   return (
     <div>
       <Row style={{ backgroundColor: "grey" }}>
@@ -50,7 +57,7 @@ export default function Header() {
         </Col>
 
         <Col>
-          <span style={{ color: "white" }} onClick={()=>(navigate('/login'))} >
+          <span style={{ color: "white" }} onClick={(logout)} >
             {" "}
             <i className="fa-solid fa-right-from-bracket"></i>Logout{" "}
           </span>
